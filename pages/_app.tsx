@@ -1,15 +1,17 @@
 import React, { ReactElement } from 'react';
 import '../styles/globals.css';
 import { AppProps } from 'next/app';
-import HSDrawerMenu from '../components/hs-drawer-menu/hs-drawer-menu.component';
+import HSSnackbar from '@components/hs-snackbar/hs-snackbar.component';
+import { GlobalContext, makeInitialGlobalContext } from '@contexts/global.context';
 
 function MyApp({
   Component, pageProps,
 }: AppProps): ReactElement {
   return (
-    <HSDrawerMenu>
+    <GlobalContext.Provider value={makeInitialGlobalContext()}>
       <Component {...pageProps} />
-    </HSDrawerMenu>
+      <HSSnackbar />
+    </GlobalContext.Provider>
   );
 }
 
