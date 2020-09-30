@@ -21,9 +21,14 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "baseUrl": "./src",
+    "baseUrl": "./",
     "paths": {
-      "@components*": ["ui/components*"]
+      "@components*": ["components*"],
+      "@services*": ["services*"],
+      "@contexts*": ["contexts*"],
+      "@models*": ["models*"],
+      "@hooks*": ["hooks*"],
+      "@api*": ["pages/api*"]
     }
   },
   "exclude": [
