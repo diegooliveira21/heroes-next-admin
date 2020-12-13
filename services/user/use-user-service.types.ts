@@ -1,8 +1,8 @@
 export interface UserData {
-  id: number | null;
+  id?: number | null;
   email: string;
   password: string;
-  token: string | null;
+  token?: string | null;
 }
 
 export interface UseUserService {
