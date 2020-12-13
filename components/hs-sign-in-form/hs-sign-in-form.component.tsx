@@ -13,7 +13,6 @@ import {
 } from '@material-ui/core';
 import useStyles from '@components/hs-sign-in-form/hs-sign-in-form.styles';
 import { GlobalContext } from '@contexts/global.context';
-import { UserData } from '@services/user/use-user-service.types';
 import { HSSignInFormEnum } from '@components/hs-sign-in-form/hs-sign-in-form.enums';
 
 function HSSignInForm(): ReactElement {
@@ -35,25 +34,14 @@ function HSSignInForm(): ReactElement {
   const refInputEmail = useRef(inputDefaultValue);
   const refInputPassword = useRef(inputDefaultValue);
 
-  const handleSubmit = (formData: UserData) => {
-    const {
-      email,
-      password,
-    } = formData;
+  const handleFormSubmit = useCallback(() => {
+    const { value: email } = refInputEmail?.current;
+    const { value: password } = refInputPassword?.current;
+    const formData = { email, password };
 
     if (!email || !password) return openSnackbar(HSSignInFormEnum.BlankFields);
 
     return isRegister ? userRegister(formData) : userAuthenticate(formData);
-  };
-
-  const handleSubmitCallback = useCallback(() => {
-    const { value: email } = refInputEmail?.current;
-    const { value: password } = refInputPassword?.current;
-
-    return handleSubmit({
-      email,
-      password,
-    });
   }, [
     isRegister,
     refInputEmail,
@@ -90,7 +78,7 @@ function HSSignInForm(): ReactElement {
           color="primary"
           size="large"
           variant="contained"
-          onClick={handleSubmitCallback}
+          onClick={handleFormSubmit}
           fullWidth
         >
           {isRegister ? 'Registrar' : 'Acessar'}
