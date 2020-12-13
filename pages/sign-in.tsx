@@ -1,4 +1,8 @@
-import React, { ReactElement, useContext, useEffect } from 'react';
+import React, {
+  ReactElement,
+  useContext,
+  useEffect,
+} from 'react';
 import {
   Box,
   Grid,
@@ -11,7 +15,7 @@ function SignInPage(): ReactElement {
   const {
     user: {
       data: {
-        isLogged,
+        id: userId,
       },
     },
   } = useContext(GlobalContext);
@@ -21,8 +25,8 @@ function SignInPage(): ReactElement {
   } = useHSRouters();
 
   useEffect(() => {
-    if (isLogged) pushToDashboard();
-  }, [isLogged]);
+    if (userId) pushToDashboard();
+  }, [userId]);
 
   return (
     <Box minHeight="100vh" alignItems="center" display="flex">

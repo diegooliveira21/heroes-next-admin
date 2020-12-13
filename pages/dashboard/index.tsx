@@ -12,7 +12,7 @@ function DashboardPage(): boolean | ReactElement {
   const {
     user: {
       data: {
-        isLogged,
+        id: userId,
       },
     },
   } = useContext(GlobalContext);
@@ -20,11 +20,11 @@ function DashboardPage(): boolean | ReactElement {
   const { pushToSignIn } = useHSRouters();
 
   useLayoutEffect(() => {
-    if (!isLogged) pushToSignIn();
-  }, [isLogged]);
+    if (!userId) pushToSignIn();
+  }, [userId]);
 
   return (
-    isLogged && (
+    !!userId && (
       <HSDrawerMenu>
         <Container>
           <Grid>
