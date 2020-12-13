@@ -1,17 +1,27 @@
-import { useMemo, useState } from 'react';
+import {
+  useMemo,
+  useState,
+  useEffect,
+} from 'react';
 import { UseUser, UseUserData } from '@hooks/use-hs-user/use-hs-user.types';
 import useUserService from '@services/user/use-user-service';
 import { UserData } from '@services/user/use-user-service.types';
-import { UseSnackbar } from '@components/hs-snackbar/hs-snackbar.types';
-import { UseUserEnum } from '@hooks/use-hs-user/use-hs-user.enums';
+import { UseUserCommonEnum, UseUserSnackbarEnum } from '@hooks/use-hs-user/use-hs-user.enums';
+import useSnackbar from '@components/hs-snackbar/hs-snackbar.hook';
 
-function useUser(snackbar: UseSnackbar): UseUser {
+function useUser(): UseUser {
+  const localUserToken = localStorage.getItem(UseUserCommonEnum.Token);
   const [data, setUserData] = useState<UseUserData>({
     id: null,
-    isLogged: false,
+    token: localUserToken,
     email: '',
     password: '',
   });
+
+  const [
+    isLoading,
+    setIsLoading,
+  ] = useState<boolean>(false);
 
   const {
     fetchUserRegister,
@@ -20,40 +30,55 @@ function useUser(snackbar: UseSnackbar): UseUser {
 
   const {
     openSnackbar,
-  } = snackbar;
+  } = useSnackbar();
 
-  function userRegister(userData: UserData) {
+  const handleSetUserData = (userData: UserData): void => (
+    setUserData((prevState) => ({
+      ...prevState,
+      ...userData,
+    }))
+  );
+
+  const userRegister = (userData: UserData): Promise<void> => {
+    setIsLoading(true);
     return fetchUserRegister(userData)
       .then((response) => {
-        openSnackbar(UseUserEnum.RegisterUserSuccess);
-        setUserData(prevState => ({
-          ...prevState,
-          ...response,
-          isLogged: true,
-        }));
+        openSnackbar(UseUserSnackbarEnum.RegisterUserSuccess);
+        handleSetUserData(response);
       })
-      .catch(() => openSnackbar(UseUserEnum.RegisterUserFailed));
-  }
+      .catch(() => openSnackbar(UseUserSnackbarEnum.RegisterUserFailed))
+      .finally(() => setIsLoading(false));
+  };
 
-  function userAuthenticate(userData: UserData) {
+  const userAuthenticate = (userData: UserData): Promise<void> => {
+    setIsLoading(true);
     return fetchUserAuthenticate(userData)
       .then((response) => {
-        openSnackbar(UseUserEnum.LoginUserSuccess);
-        setUserData(prevState => ({
-          ...prevState,
-          ...response,
-          isLogged: true,
-        }));
+        openSnackbar(UseUserSnackbarEnum.LoginUserSuccess);
+        handleSetUserData(response);
       })
-      .catch(() => openSnackbar(UseUserEnum.LoginUserFailed));
-  }
+      .catch(() => openSnackbar(UseUserSnackbarEnum.LoginUserFailed))
+      .finally(() => setIsLoading(false));
+  };
+
+  useEffect(
+    () => {
+      if (data.token) {
+        localStorage.setItem(UseUserCommonEnum.Token, data.token);
+        if (!data.id) userAuthenticate(data);
+      }
+    },
+    [data.token],
+  );
 
   return useMemo(() => ({
     data,
+    isLoading,
     userRegister,
     userAuthenticate,
   }), [
     data,
+    isLoading,
     setUserData,
     userRegister,
   ]);

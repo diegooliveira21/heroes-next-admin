@@ -6,12 +6,12 @@ import { UseUser } from '@hooks/use-hs-user/use-hs-user.types';
 
 export interface GlobalContextType {
   snackbar: UseSnackbar;
-  user: UseUser
+  user: UseUser;
 }
 
-export function makeInitialGlobalContext(): GlobalContextType {
+export function makeGlobalContext(): GlobalContextType {
   const snackbar = useSnackbar();
-  const user = useUser(snackbar);
+  const user = useUser();
 
   return {
     snackbar,
@@ -21,10 +21,23 @@ export function makeInitialGlobalContext(): GlobalContextType {
 
 const initialValue: GlobalContextType = {
   snackbar: {
-    data: {},
+    data: {
+      vertical: 'bottom',
+      open: false,
+      horizontal: 'center',
+      message: '',
+    },
+    openSnackbar: () => null,
+    closeSnackbar: () => null,
   },
   user: {
-    data: {},
+    data: {
+      email: '',
+      id: null,
+      password: '',
+      token: null,
+    },
+    isLoading: false,
   },
 };
 

@@ -1,11 +1,10 @@
 import { UserData } from '@services/user/use-user-service.types';
 
-export interface UseUserData extends UserData {
-  isLogged: boolean;
-}
+export type UseUserData = UserData;
 
 export interface UseUser {
   data: UseUserData;
   userRegister: (userData: UserData) => Promise<void>;
   userAuthenticate: (userData: UserData) => Promise<void>;
+  isLoading: boolean;
 }
