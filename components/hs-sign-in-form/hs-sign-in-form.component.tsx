@@ -5,18 +5,13 @@ import React, {
   ReactElement,
 } from 'react';
 import {
-  Grid,
+  Form,
   Button,
-  TextField,
-  Typography,
-} from '@material-ui/core';
-import useStyles from '@components/hs-sign-in-form/hs-sign-in-form.styles';
-import { HSSignInFormEnum } from '@components/hs-sign-in-form/hs-sign-in-form.enums';
+  Container,
+} from 'react-bootstrap';
 import { useAuth } from '../../providers/auth/auth.provider';
 
 function HSSignInForm(): ReactElement {
-  const classes = useStyles();
-
   const [isRegister, setIsRegister] = useState<boolean>(false);
 
   const {
@@ -46,51 +41,45 @@ function HSSignInForm(): ReactElement {
 
   return (
     <>
-      <Typography
-        variant="h4"
-        align="center"
-        gutterBottom
-      >
+      <h4>
         {isRegister ? 'Faça seu cadastro' : 'Acesse sua conta'}
-      </Typography>
-      <Grid container className={classes.inputWrapper}>
-        <TextField
-          inputRef={refInputEmail}
-          label="E-mail"
-          type="email"
-          variant="filled"
-          fullWidth
-        />
-        <TextField
-          inputRef={refInputPassword}
-          label="Senha"
-          type="password"
-          variant="filled"
-          fullWidth
-        />
-        <Button
-          color="primary"
-          size="large"
-          variant="contained"
-          onClick={handleFormSubmit}
-          fullWidth
-        >
-          {isRegister ? 'Registrar' : 'Acessar'}
-        </Button>
-        <Button
-          color="primary"
-          size="large"
-          variant="text"
-          onClick={handleIsRegister}
-          fullWidth
-        >
-          {
-            isRegister
-              ? 'Já é cadastrado? Acesse sua conta'
-              : 'Ainda não tem conta? Faça seu cadastro'
-          }
-        </Button>
-      </Grid>
+      </h4>
+      <Container>
+        <Form>
+          <Form.Group controlId="formBasicEmail">
+            <Form.Label>E-mail</Form.Label>
+            <Form.Control
+              type="email"
+              placeholder="Digite seu e-mail"
+              ref={refInputEmail}
+            />
+          </Form.Group>
+          <Form.Group controlId="formBasicPassword">
+            <Form.Label>Senha</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Digite sua senha"
+              ref={refInputPassword}
+            />
+          </Form.Group>
+          <Button
+            variant="primary"
+            onClick={handleFormSubmit}
+          >
+            {isRegister ? 'Registrar' : 'Acessar'}
+          </Button>
+          <Button
+            variant="dark"
+            onClick={handleIsRegister}
+          >
+            {
+              isRegister
+                ? 'Já é cadastrado? Acesse sua conta'
+                : 'Ainda não tem conta? Faça seu cadastro'
+            }
+          </Button>
+        </Form>
+      </Container>
     </>
   );
 }

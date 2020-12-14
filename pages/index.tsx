@@ -1,15 +1,19 @@
 import React, { ReactElement } from 'react';
-import { Box, Grid } from '@material-ui/core';
 import HSSignInForm from '@components/hs-sign-in-form/hs-sign-in-form.component';
+import {
+  Col,
+  Row,
+  Container,
+} from 'react-bootstrap';
 
 export default function Home(): ReactElement {
   return (
-    <Box minHeight="100vh" alignItems="center" display="flex">
-      <Grid container justify="center">
-        <Grid item xs={5}>
+    <Container>
+      <Row>
+        <Col>
           <HSSignInForm />
-        </Grid>
-      </Grid>
-    </Box>
+        </Col>
+      </Row>
+    </Container>
   );
 }
