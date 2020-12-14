@@ -1,31 +1,15 @@
-import Head from 'next/head';
-import { Button } from '@material-ui/core';
-import useHSRouters from '@hooks/use-hs-routers/use-hs-routers';
-import styles from '../styles/Home.module.css';
+import React, { ReactElement } from 'react';
+import { Box, Grid } from '@material-ui/core';
+import HSSignInForm from '@components/hs-sign-in-form/hs-sign-in-form.component';
 
-export default function Home() {
-  const { pushToDashboard } = useHSRouters();
-
+export default function Home(): ReactElement {
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Heroes Association</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <Button onClick={pushToDashboard}>Ir para o Dashboard</Button>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by
-          {' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
+    <Box minHeight="100vh" alignItems="center" display="flex">
+      <Grid container justify="center">
+        <Grid item xs={5}>
+          <HSSignInForm />
+        </Grid>
+      </Grid>
+    </Box>
   );
 }
