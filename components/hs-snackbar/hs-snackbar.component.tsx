@@ -1,28 +1,8 @@
-import React, { ReactElement, useContext } from 'react';
-import { Snackbar } from '@material-ui/core';
-import { GlobalContext } from '@contexts/global.context';
+import React, { ReactElement } from 'react';
 
 function HSSnackbar(): ReactElement {
-  const {
-    snackbar: {
-      data: {
-        open,
-        message,
-        vertical,
-        horizontal,
-      },
-      closeSnackbar,
-    },
-  } = useContext(GlobalContext);
-
   return (
-    <Snackbar
-      anchorOrigin={{ vertical, horizontal }}
-      open={open}
-      onClose={closeSnackbar}
-      message={message}
-      key={vertical + horizontal}
-    />
+    <div>Works</div>
   );
 }
 
