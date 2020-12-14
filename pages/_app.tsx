@@ -2,17 +2,18 @@ import React, { ReactElement } from 'react';
 import '../styles/globals.css';
 import { AppProps } from 'next/app';
 import HSSnackbar from '@components/hs-snackbar/hs-snackbar.component';
-import { GlobalContext, makeGlobalContext } from '@contexts/global.context';
+import AuthProvider from '../providers/auth/auth.provider';
 
 function MyApp({
   Component, pageProps,
 }: AppProps): ReactElement {
-  const globalContext = makeGlobalContext();
   return (
-    <GlobalContext.Provider value={globalContext}>
-      <Component {...pageProps} />
+    <>
+      <AuthProvider>
+        <Component {...pageProps} />
+      </AuthProvider>
       <HSSnackbar />
-    </GlobalContext.Provider>
+    </>
   );
 }
 

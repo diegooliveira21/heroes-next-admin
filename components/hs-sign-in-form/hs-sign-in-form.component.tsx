@@ -1,7 +1,6 @@
 import React, {
   useRef,
   useState,
-  useContext,
   useCallback,
   ReactElement,
 } from 'react';
@@ -12,8 +11,8 @@ import {
   Typography,
 } from '@material-ui/core';
 import useStyles from '@components/hs-sign-in-form/hs-sign-in-form.styles';
-import { GlobalContext } from '@contexts/global.context';
 import { HSSignInFormEnum } from '@components/hs-sign-in-form/hs-sign-in-form.enums';
+import { useAuth } from '../../providers/auth/auth.provider';
 
 function HSSignInForm(): ReactElement {
   const classes = useStyles();
@@ -21,14 +20,8 @@ function HSSignInForm(): ReactElement {
   const [isRegister, setIsRegister] = useState<boolean>(false);
 
   const {
-    user: {
-      userRegister,
-      userAuthenticate,
-    },
-    snackbar: {
-      openSnackbar,
-    },
-  } = useContext(GlobalContext);
+    createUserWithEmailAndPassword,
+  } = useAuth();
 
   const inputDefaultValue = { value: '' };
   const refInputEmail = useRef(inputDefaultValue);
@@ -39,9 +32,10 @@ function HSSignInForm(): ReactElement {
     const { value: password } = refInputPassword?.current;
     const formData = { email, password };
 
-    if (!email || !password) return openSnackbar(HSSignInFormEnum.BlankFields);
+    // TODO: Will be implemented in future commit
+    // if (!email || !password) return openSnackbar(HSSignInFormEnum.BlankFields);
 
-    return isRegister ? userRegister(formData) : userAuthenticate(formData);
+    return createUserWithEmailAndPassword(email, password);
   }, [
     isRegister,
     refInputEmail,
