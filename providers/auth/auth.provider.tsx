@@ -1,4 +1,5 @@
 import React, {
+  useRef,
   useState,
   useEffect,
   useContext,
@@ -6,8 +7,11 @@ import React, {
   createContext,
 } from 'react';
 import nookies from 'nookies';
+import { ToastCommonTitleEnum } from '@providers/toast/toast.enums';
+import { AuthProviderToastMessageEnum } from '@providers/auth/auth.enums';
 import { firebaseClient } from '../../firebaseClient';
-import { AuthContextType, AuthProviderProps } from './auth.types';
+import { AuthContextType, AuthProviderProps, PasswordResetData } from './auth.types';
+import { useToast } from '../toast/toast.provider';
 
 const AuthContext = createContext<AuthContextType>({
   user: null,
@@ -28,6 +32,18 @@ export default function AuthProvider({
 }: AuthProviderProps): ReactElement {
   const [user, setUser] = useState<AuthContextType['user']>(null);
   const [isAuthLoading, setIsAuthLoading] = useState(false);
+
+  const passwordResetDataInitial = {
+    code: '',
+    email: '',
+  };
+  const passwordResetDataRef = useRef<PasswordResetData>(
+    passwordResetDataInitial,
+  );
+
+  const {
+    addToast,
+  } = useToast();
 
   const createUserWithEmailAndPassword: AuthContextType[
     'createUserWithEmailAndPassword'
@@ -58,10 +74,34 @@ export default function AuthProvider({
     ] = async (
       email,
     ) => {
-      setIsAuthLoading(true);
-      return firebaseClient.auth()
-        .sendPasswordResetEmail(email)
-        .finally(() => setIsAuthLoading(false));
+      try {
+        setIsAuthLoading(true);
+        if (!email) {
+          return addToast({
+            title: ToastCommonTitleEnum.Error,
+            message: AuthProviderToastMessageEnum.OnEmptyEmail,
+          });
+        }
+
+        addToast({
+          message: ToastCommonTitleEnum.Wait,
+          title: AuthProviderToastMessageEnum.OnFetchingReset,
+        });
+
+        await firebaseClient.auth().sendPasswordResetEmail(email);
+
+        return addToast({
+          title: ToastCommonTitleEnum.Success,
+          message: AuthProviderToastMessageEnum.OnSendPasswordReset,
+        });
+      } catch (error) {
+        return addToast({
+          title: ToastCommonTitleEnum.Error,
+          message: error.message,
+        });
+      } finally {
+        setIsAuthLoading(false);
+      }
     };
 
   const verifyPasswordResetCode: AuthContextType[
@@ -69,22 +109,32 @@ export default function AuthProvider({
     ] = async (
       code,
     ) => {
-      setIsAuthLoading(true);
-      return firebaseClient.auth()
-        .verifyPasswordResetCode(code)
-        .finally(() => setIsAuthLoading(false));
+      try {
+        setIsAuthLoading(true);
+
+        passwordResetDataRef.current = {
+          code,
+          email: await firebaseClient.auth()
+            .verifyPasswordResetCode(code)
+            .then(((email) => email)),
+        };
+      } finally {
+        setIsAuthLoading(false);
+      }
     };
 
   const confirmPasswordReset: AuthContextType[
     'confirmPasswordReset'
     ] = async (
-      code,
       newPassword,
     ) => {
       setIsAuthLoading(true);
       return firebaseClient.auth()
-        .confirmPasswordReset(code, newPassword)
-        .finally(() => setIsAuthLoading(false));
+        .confirmPasswordReset(passwordResetDataRef.current.code, newPassword)
+        .finally(() => {
+          passwordResetDataRef.current = passwordResetDataInitial;
+          setIsAuthLoading(false);
+        });
     };
 
   // listen for token changes

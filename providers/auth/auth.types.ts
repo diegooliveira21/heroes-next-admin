@@ -17,13 +17,17 @@ export interface AuthContextType {
   ) => (Promise<void> | null);
   verifyPasswordResetCode: (
     code: string,
-  ) => (Promise<string> | null);
+  ) => (Promise<void> | null);
   confirmPasswordReset: (
-    email: string,
     newPassword: string
   ) => (Promise<void> | null);
 }
 
 export interface AuthProviderProps {
   children: ReactElement;
+}
+
+export interface PasswordResetData {
+  code: string;
+  email: string;
 }
