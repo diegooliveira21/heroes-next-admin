@@ -9,7 +9,8 @@ import {
   Button,
   Container,
 } from 'react-bootstrap';
-import { useAuth } from '../../providers/auth/auth.provider';
+import useHSRouters from '@hooks/use-hs-routers/use-hs-routers';
+import { useAuth } from '@providers/auth/auth.provider';
 
 function HSSignInForm(): ReactElement {
   const [isRegister, setIsRegister] = useState<boolean>(false);
@@ -17,6 +18,9 @@ function HSSignInForm(): ReactElement {
   const {
     createUserWithEmailAndPassword,
   } = useAuth();
+  const {
+    pushToPasswordReset,
+  } = useHSRouters();
 
   const inputDefaultValue = { value: '' };
   const refInputEmail = useRef(inputDefaultValue);
@@ -51,7 +55,7 @@ function HSSignInForm(): ReactElement {
             <Form.Control
               type="email"
               placeholder="Digite seu e-mail"
-              ref={refInputEmail}
+              // ref={refInputEmail}
             />
           </Form.Group>
           <Form.Group controlId="formBasicPassword">
@@ -59,7 +63,7 @@ function HSSignInForm(): ReactElement {
             <Form.Control
               type="password"
               placeholder="Digite sua senha"
-              ref={refInputPassword}
+              // ref={refInputPassword}
             />
           </Form.Group>
           <Button
@@ -77,6 +81,12 @@ function HSSignInForm(): ReactElement {
                 ? 'Já é cadastrado? Acesse sua conta'
                 : 'Ainda não tem conta? Faça seu cadastro'
             }
+          </Button>
+          <Button
+            variant="light"
+            onClick={pushToPasswordReset}
+          >
+            Esqueceu sua senha? Clique aqui
           </Button>
         </Form>
       </Container>
