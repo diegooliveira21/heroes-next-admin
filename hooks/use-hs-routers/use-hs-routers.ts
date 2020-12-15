@@ -14,9 +14,19 @@ function useHSRouters(): UseHsRouters {
     return router.push(UseHSRoutersPathNameEnum.SignIn);
   }
 
+  function pushToPasswordReset(): Promise<boolean> {
+    return router.push(UseHSRoutersPathNameEnum.PasswordReset);
+  }
+
+  function pushToHome(): Promise<boolean> {
+    return router.push(UseHSRoutersPathNameEnum.Home);
+  }
+
   return useMemo(() => ({
+    pushToPasswordReset,
     pushToDashboard,
     pushToSignIn,
+    pushToHome,
   }), [router]);
 }
 
