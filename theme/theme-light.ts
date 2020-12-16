@@ -1,8 +1,9 @@
-import { hsl, transparentize } from 'polished';
+import { transparentize } from 'polished';
 
 const color = {
   primary: '#2196f3',
   secondary: '#FFF',
+  danger: '#e53935',
 };
 
 const borderRadius = {
