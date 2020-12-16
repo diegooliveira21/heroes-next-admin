@@ -28,7 +28,9 @@
       "@contexts*": ["contexts*"],
       "@models*": ["models*"],
       "@hooks*": ["hooks*"],
-      "@api*": ["pages/api*"]
+      "@api*": ["pages/api*"],
+      "@providers*": ["providers*"],
+      "@libraries*": ["libraries*"]
     }
   },
   "exclude": [
