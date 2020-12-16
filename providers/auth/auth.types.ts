@@ -7,14 +7,14 @@ export interface AuthContextType {
   createUserWithEmailAndPassword: (
     email: string,
     password: string
-  ) => (Promise<firebaseClient.auth.UserCredential> | null);
+  ) => (Promise<boolean> | null);
   signInWithEmailAndPassword: (
     email: string,
     password: string
-  ) => (Promise<firebaseClient.auth.UserCredential> | null);
+  ) => (Promise<boolean> | null);
   sendPasswordResetEmail: (
     email: string,
-  ) => (Promise<void> | null);
+  ) => (Promise<boolean> | null);
   verifyPasswordResetCode: (
     code: string,
   ) => (Promise<void> | null);

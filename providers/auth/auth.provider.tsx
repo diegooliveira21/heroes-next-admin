@@ -51,10 +51,36 @@ export default function AuthProvider({
       email,
       password,
     ) => {
-      setIsAuthLoading(true);
-      return firebaseClient.auth()
-        .createUserWithEmailAndPassword(email, password)
-        .finally(() => setIsAuthLoading(false));
+      try {
+        setIsAuthLoading(true);
+        if (!email || !password) {
+          throw new Error(AuthProviderToastMessageEnum.OnEmptyInput);
+        }
+
+        addToast({
+          title: ToastCommonTitleEnum.Wait,
+          message: AuthProviderToastMessageEnum.OnFetchingCreateUser,
+        });
+
+        await firebaseClient.auth()
+          .createUserWithEmailAndPassword(email, password);
+
+        addToast({
+          title: ToastCommonTitleEnum.Wait,
+          message: AuthProviderToastMessageEnum.OnCreateUser,
+        });
+
+        return true;
+      } catch (error) {
+        addToast({
+          title: ToastCommonTitleEnum.Error,
+          message: error.message,
+        });
+
+        return false;
+      } finally {
+        setIsAuthLoading(false);
+      }
     };
 
   const signInWithEmailAndPassword: AuthContextType[
@@ -63,10 +89,36 @@ export default function AuthProvider({
       email,
       password,
     ) => {
-      setIsAuthLoading(true);
-      return firebaseClient.auth()
-        .signInWithEmailAndPassword(email, password)
-        .finally(() => setIsAuthLoading(false));
+      try {
+        setIsAuthLoading(true);
+        if (!email || !password) {
+          throw new Error(AuthProviderToastMessageEnum.OnEmptyInput);
+        }
+
+        addToast({
+          title: ToastCommonTitleEnum.Wait,
+          message: AuthProviderToastMessageEnum.OnFetchingSignIn,
+        });
+
+        await firebaseClient.auth()
+          .signInWithEmailAndPassword(email, password);
+
+        addToast({
+          title: ToastCommonTitleEnum.Success,
+          message: AuthProviderToastMessageEnum.OnSign,
+        });
+
+        return true;
+      } catch (error) {
+        addToast({
+          title: ToastCommonTitleEnum.Error,
+          message: error.message,
+        });
+
+        return false;
+      } finally {
+        setIsAuthLoading(false);
+      }
     };
 
   const sendPasswordResetEmail: AuthContextType[
@@ -77,28 +129,30 @@ export default function AuthProvider({
       try {
         setIsAuthLoading(true);
         if (!email) {
-          return addToast({
-            title: ToastCommonTitleEnum.Error,
-            message: AuthProviderToastMessageEnum.OnEmptyEmail,
-          });
+          throw new Error(AuthProviderToastMessageEnum.OnEmptyInput);
         }
 
         addToast({
-          message: ToastCommonTitleEnum.Wait,
-          title: AuthProviderToastMessageEnum.OnFetchingReset,
+          title: ToastCommonTitleEnum.Wait,
+          message: AuthProviderToastMessageEnum.OnFetchingReset,
         });
 
-        await firebaseClient.auth().sendPasswordResetEmail(email);
+        await firebaseClient.auth()
+          .sendPasswordResetEmail(email);
 
-        return addToast({
+        addToast({
           title: ToastCommonTitleEnum.Success,
           message: AuthProviderToastMessageEnum.OnSendPasswordReset,
         });
+
+        return true;
       } catch (error) {
-        return addToast({
+        addToast({
           title: ToastCommonTitleEnum.Error,
           message: error.message,
         });
+
+        return false;
       } finally {
         setIsAuthLoading(false);
       }

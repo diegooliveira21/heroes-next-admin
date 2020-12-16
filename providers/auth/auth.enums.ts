@@ -12,6 +12,10 @@ export enum AuthProviderCommonEnum {
 
 export enum AuthProviderToastMessageEnum {
   OnSendPasswordReset = 'Um link de recuperação de senha foi enviado ao seu e-mail',
-  OnEmptyEmail = 'Você precisa digitar um e-mail para recuperação',
+  OnCreateUser = 'Sua conta foi criada com sucesso',
+  OnSign = 'Você acessou sua conta',
+  OnEmptyInput = 'Todos os campos são necessários',
+  OnFetchingCreateUser = 'Solicitando criação de conta',
+  OnFetchingSignIn = 'Solicitando acesso à conta',
   OnFetchingReset = 'Solicitando código de reset',
 }
