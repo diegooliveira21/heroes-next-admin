@@ -5,8 +5,8 @@ import {
   Button,
   Container,
 } from 'react-bootstrap';
-import HSPasswordResetSend from '@components/hs-password-reset-send/hs-password-reset-send.component';
 import useHSRouters from '@hooks/use-hs-routers/use-hs-routers';
+import HSPasswordResetForm from '@components/hs-password-reset-form/hs-password-reset-form.component';
 
 export default function PasswordResetPage(): ReactElement {
   const {
@@ -16,7 +16,7 @@ export default function PasswordResetPage(): ReactElement {
   return (
     <Container>
       <h4>Recupere sua senha</h4>
-      <HSPasswordResetSend />
+      <HSPasswordResetForm />
       <Button
         variant="dark"
         onClick={pushToHome}
