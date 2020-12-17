@@ -1,3 +1,11 @@
+### Gitflow
+
+Todo o desenvolvimento foi feito dentro de uma versão fictícia, a 0.13.0. Pra melhor visualização foi organizado cada PR com a devida label, e também milestone. Abaixo deixo o link com cada um:
+
+Lista de PRs: https://github.com/diegooliveira21/heroes-next-admin/pulls?q=is%3Apr+is%3Aclosed+label%3A%22Release+0.13.0%22
+Milestone: https://github.com/diegooliveira21/heroes-next-admin/milestone/1?closed=1
+PR da release em master: https://github.com/diegooliveira21/heroes-next-admin/pull/12
+
 ### Estrutura
 
 A estrutura segue o conceito de Providers, onde se concentra a principal lógica de négocio da aplicação. Os Providers, muito parecido com as classes no OOP, persistem e compartilham dados entre os componentes e telas que o consomem, permitindo modular e escalar a lógica, conforme o negócio cresce ou muda. Com o avanço da lógica, um Provider tende a se sobrecarregar, já que a idéia é concentrar nele toda regra, nessa ocasião, granular o Provider em hooks menores, deixando cada vez mais a persistência dos dados no Provider e a lógica nos hooks, é um caminho a ser considerado para manter a boa manutenção da aplicação.
