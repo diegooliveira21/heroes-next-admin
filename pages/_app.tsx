@@ -5,6 +5,7 @@ import { ThemeProvider } from 'styled-components';
 import AuthProvider from '@providers/auth/auth.provider';
 import ToastProvider from '@providers/toast/toast.provider';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import CustomerProvider from '@providers/customer/customer.provider';
 import theme from '../theme/theme';
 
 function MyApp({
@@ -14,7 +15,9 @@ function MyApp({
     <ThemeProvider theme={theme.light}>
       <ToastProvider>
         <AuthProvider>
-          <Component {...pageProps} />
+          <CustomerProvider>
+            <Component {...pageProps} />
+          </CustomerProvider>
         </AuthProvider>
       </ToastProvider>
     </ThemeProvider>
