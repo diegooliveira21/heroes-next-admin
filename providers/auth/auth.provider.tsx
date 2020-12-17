@@ -9,6 +9,7 @@ import React, {
 import nookies from 'nookies';
 import { ToastCommonTitleEnum } from '@providers/toast/toast.enums';
 import { AuthProviderToastMessageEnum } from '@providers/auth/auth.enums';
+import useHSRouters from '@hooks/use-hs-routers/use-hs-routers';
 import { firebaseClient } from '../../firebaseClient';
 import { AuthContextType, AuthProviderProps, PasswordResetData } from './auth.types';
 import { useToast } from '../toast/toast.provider';
@@ -44,6 +45,9 @@ export default function AuthProvider({
   const {
     addToast,
   } = useToast();
+  const {
+    pushToHome,
+  } = useHSRouters();
 
   const createUserWithEmailAndPassword: AuthContextType[
     'createUserWithEmailAndPassword'
@@ -218,6 +222,13 @@ export default function AuthProvider({
 
       // clean up setInterval
       return () => clearInterval(handle);
+    },
+    [],
+  );
+
+  useEffect(
+    () => {
+      if (!user) pushToHome();
     },
     [],
   );
