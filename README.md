@@ -20,7 +20,7 @@ Numa aplicação CRUD, nós lidamos com todo o fluxo de dados de uma aplicação
 
 ### Typesript
 
-O uso do Typescript tras o melhor do Javascript. Instâncias de objetos, funções, variáveis as vezes são imprevisíveis numa aplicação JS, e ok, é a flexibildiade que a linguagem permite. Mas deixa cabível ao responsavel técnico 
+O uso do Typescript tras o melhor do Javascript, dando previsibilidade aos dados recebidos e passados durante os fluxos da aplicação.
 
 ### UI - React Bootstrap + Styles
 
