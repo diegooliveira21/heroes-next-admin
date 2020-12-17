@@ -1,9 +1,9 @@
 ### Gitflow
 
-Todo o desenvolvimento foi feito dentro de uma versão fictícia, a 0.13.0. Pra melhor visualização foi organizado cada PR com a devida label, e também milestone. Abaixo deixo o link com cada um:
+Todo o desenvolvimento foi feito dentro de uma versão fictícia, a 0.13.0. Pra melhor visualização foi organizado cada PR com a devida label, e também milestone:
 
-Lista de PRs: https://github.com/diegooliveira21/heroes-next-admin/pulls?q=is%3Apr+is%3Aclosed+label%3A%22Release+0.13.0%22
-Milestone: https://github.com/diegooliveira21/heroes-next-admin/milestone/1?closed=1
+Lista de PRs: https://github.com/diegooliveira21/heroes-next-admin/pulls?q=is%3Apr+is%3Aclosed+label%3A%22Release+0.13.0%22 \
+Milestone: https://github.com/diegooliveira21/heroes-next-admin/milestone/1?closed=1 \
 PR da release em master: https://github.com/diegooliveira21/heroes-next-admin/pull/12
 
 ### Estrutura
