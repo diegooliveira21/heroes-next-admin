@@ -7,15 +7,18 @@ import {
   Container,
 } from 'react-bootstrap';
 import HSNavMenu from '@components/hs-nav-menu/hs-nav-menu.component';
+import HSCustomerAddForm from '@components/hs-customer-add-form/hs-customer-add-form.component';
+import HSCustomerTable from '@components/hs-customer-table/hs-customer-table.component';
 
-function DashboardPage(): boolean | ReactElement {
+function DashboardPage(): ReactElement {
   return (
     <>
       <HSNavMenu />
       <Container>
         <Row>
           <Col>
-            <h1>Works</h1>
+            <HSCustomerAddForm />
+            <HSCustomerTable />
           </Col>
         </Row>
       </Container>
